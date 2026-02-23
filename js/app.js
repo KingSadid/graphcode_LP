@@ -10,13 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Smooth scroll (Lenis) ---
     const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
 
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Sync Lenis with GSAP ScrollTrigger
+    // Sync Lenis with GSAP ScrollTrigger (single RAF via GSAP ticker only)
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -26,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- GSAP animations ---
     initAnimations();
+
+    // Recalculate scroll positions after everything is set up
+    ScrollTrigger.refresh();
 
     // --- Loader ---
     const loader = document.querySelector('.loader');

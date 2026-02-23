@@ -12,6 +12,7 @@ export function initAnimations() {
             {
                 opacity: 1, y: 0, duration: 0.8,
                 ease: 'power3.out',
+                immediateRender: false,
                 scrollTrigger: {
                     trigger: el,
                     start: 'top 85%',
@@ -35,15 +36,19 @@ export function initAnimations() {
     staggerSections.forEach((selector) => {
         const el = document.querySelector(selector);
         if (!el) return;
-        gsap.from(el.children, {
-            opacity: 0, y: 40, duration: 0.6,
-            stagger: 0.15, ease: 'power2.out',
-            scrollTrigger: {
-                trigger: el,
-                start: 'top 80%',
-                toggleActions: 'play none none none',
-            },
-        });
+        gsap.fromTo(el.children,
+            { opacity: 0, y: 40 },
+            {
+                opacity: 1, y: 0, duration: 0.6,
+                stagger: 0.15, ease: 'power2.out',
+                immediateRender: false,
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none',
+                },
+            }
+        );
     });
 
     // --- Navbar active link ---

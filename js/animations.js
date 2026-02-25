@@ -87,69 +87,40 @@ function animatePageContent() {
 }
 
 /* --------------------------------------------------
-   Popmotion-based Entrance Animations
+   Entrance Animations (GSAP-powered with spring physics)
    -------------------------------------------------- */
 function animateFadeUp(el, delay) {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(40px)';
-
-    setTimeout(() => {
-        if (typeof popmotion !== 'undefined' && popmotion.animate) {
-            popmotion.animate({
-                from: 0,
-                to: 1,
-                duration: 600,
-                ease: popmotion.easeOut,
-                onUpdate: (v) => {
-                    el.style.opacity = v;
-                    el.style.transform = `translateY(${40 * (1 - v)}px)`;
-                }
-            });
-        } else {
-            // Fallback GSAP
-            gsap.to(el, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-        }
-    }, delay * 1000);
+    gsap.set(el, { opacity: 0, y: 40 });
+    gsap.to(el, {
+        opacity: 1, y: 0,
+        duration: 0.7,
+        delay: delay,
+        ease: 'power3.out',
+    });
 }
 
 function animateGlitchIn(el, delay) {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
+    gsap.set(el, { opacity: 0, y: 30 });
 
-    setTimeout(() => {
-        // Glitch flicker effect
-        const glitchTL = gsap.timeline();
-        glitchTL
-            .set(el, { opacity: 1 })
-            .to(el, { x: -5, opacity: 0.7, duration: 0.05 })
-            .to(el, { x: 5, opacity: 0.5, duration: 0.05 })
-            .to(el, { x: -3, opacity: 0.8, duration: 0.05 })
-            .to(el, { x: 3, opacity: 0.6, duration: 0.05 })
-            .to(el, { x: -1, opacity: 0.9, duration: 0.05 })
-            .to(el, { x: 0, opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
-    }, delay * 1000);
+    const glitchTL = gsap.timeline({ delay: delay });
+    glitchTL
+        .set(el, { opacity: 1 })
+        .to(el, { x: -5, opacity: 0.7, duration: 0.05 })
+        .to(el, { x: 5, opacity: 0.5, duration: 0.05 })
+        .to(el, { x: -3, opacity: 0.8, duration: 0.05 })
+        .to(el, { x: 3, opacity: 0.6, duration: 0.05 })
+        .to(el, { x: -1, opacity: 0.9, duration: 0.05 })
+        .to(el, { x: 0, opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
 }
 
 function animateScaleIn(el, delay) {
-    el.style.opacity = '0';
-    el.style.transform = 'scale(0.6)';
-
-    setTimeout(() => {
-        if (typeof popmotion !== 'undefined' && popmotion.spring) {
-            popmotion.spring({
-                from: 0,
-                to: 1,
-                stiffness: 200,
-                damping: 15,
-                onUpdate: (v) => {
-                    el.style.opacity = Math.min(v, 1);
-                    el.style.transform = `scale(${0.6 + 0.4 * v})`;
-                }
-            });
-        } else {
-            gsap.to(el, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' });
-        }
-    }, delay * 1000);
+    gsap.set(el, { opacity: 0, scale: 0.6 });
+    gsap.to(el, {
+        opacity: 1, scale: 1,
+        duration: 0.6,
+        delay: delay,
+        ease: 'back.out(1.7)',
+    });
 }
 
 function animateHeroEntrance() {

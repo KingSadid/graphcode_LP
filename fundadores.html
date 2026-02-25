@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fundadores — GraphCode</title>
+    <meta name="description"
+        content="Conoce a los fundadores de GraphCode: ingenieros multimedia con visión innovadora." />
+
+    <link rel="stylesheet" href="css/main.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popmotion@11.0.5/dist/popmotion.min.js"></script>
+</head>
+
+<body>
+    <div class="loader" aria-label="Cargando">
+        <div class="loader__ring"></div>
+        <p class="loader__text">GraphCode</p>
+    </div>
+
+    <canvas id="three-canvas"></canvas>
+
+    <div class="transition-overlay">
+        <div class="transition-overlay__inner"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="navbar__logo">Graph<span>Code</span></a>
+        <div class="navbar__links">
+            <a href="index.html">Inicio</a>
+            <a href="productos.html">Productos</a>
+            <a href="fundadores.html" class="active">Fundadores</a>
+            <a href="redes.html">Redes</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <button class="navbar__toggle" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div data-barba="wrapper">
+        <div data-barba="container" data-barba-namespace="fundadores">
+
+            <section id="fundadores" class="section">
+                <p class="section__tag anim-text" data-anim="fade-up">El Equipo</p>
+                <h2 class="section__title anim-text" data-anim="fade-up">Nuestros <span>Fundadores</span></h2>
+                <p class="section__subtitle anim-text" data-anim="fade-up">
+                    Tres ingenieros multimedia con la visión de crear soluciones digitales extraordinarias.
+                </p>
+                <div class="founders__grid">
+                    <!-- Sadid -->
+                    <div class="glass-card founder-card">
+                        <img src="assets/img/sadid.jpg" alt="Sadid Acosta" class="founder-card__photo" />
+                        <h3 class="founder-card__name">Sadid Acosta</h3>
+                        <p class="founder-card__role">Cofundador · Ing. Multimedia</p>
+                        <p class="founder-card__desc">
+                            Ingeniero multimedia especializado en desarrollo fullstack y arquitectura de software.
+                            Apasionado por transformar ideas en productos digitales de alto rendimiento.
+                        </p>
+                    </div>
+                    <!-- Pablo -->
+                    <div class="glass-card founder-card">
+                        <img src="assets/img/pablo.jpg" alt="Pablo Chaves" class="founder-card__photo" />
+                        <h3 class="founder-card__name">Pablo Chaves</h3>
+                        <p class="founder-card__role">Cofundador · Ing. Multimedia</p>
+                        <p class="founder-card__desc">
+                            Ingeniero multimedia con enfoque en diseño gráfico y experiencias interactivas.
+                            Combina creatividad y tecnología para generar impacto visual.
+                        </p>
+                    </div>
+                    <!-- Alejandro -->
+                    <div class="glass-card founder-card">
+                        <img src="assets/img/alejandro.jpg" alt="Alejandro Flórez" class="founder-card__photo" />
+                        <h3 class="founder-card__name">Alejandro Flórez</h3>
+                        <p class="founder-card__role">Cofundador · Ing. Multimedia</p>
+                        <p class="founder-card__desc">
+                            Ingeniero multimedia enfocado en producción audiovisual y branding digital.
+                            Líder creativo que convierte la visión del cliente en realidad.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p class="footer__brand">Graph<span>Code</span></p>
+                <p class="footer__copy">&copy; 2026 GraphCode. Todos los derechos reservados.</p>
+                <p class="footer__tagline">Desarrollo · Diseño · Producción Audiovisual</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

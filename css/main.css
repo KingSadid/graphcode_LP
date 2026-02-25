@@ -858,15 +858,15 @@ button {
   transform: translateX(-50%);
   width: 150vw;
   height: 120vh;
+  /* Simplified gradient, removed expensive blur filter */
   background: conic-gradient(from 180deg at 50% 0%,
       rgba(108, 99, 255, 0) 130deg,
       rgba(108, 99, 255, 0.05) 150deg,
-      rgba(255, 42, 112, 0.1) 180deg,
+      rgba(255, 42, 112, 0.08) 180deg,
       rgba(108, 99, 255, 0.05) 210deg,
       rgba(108, 99, 255, 0) 230deg);
   pointer-events: none;
   z-index: 0;
-  filter: blur(40px);
 }
 
 .theater-2d__screen-wrapper {
@@ -878,6 +878,8 @@ button {
   margin: 0 auto;
   transform: rotateX(5deg);
   transform-style: preserve-3d;
+  /* Hardware acceleration tip */
+  will-change: transform;
 }
 
 .theater-2d__screen {
@@ -886,9 +888,8 @@ button {
   height: 100%;
   border-radius: 12px;
   border: 2px solid rgba(255, 255, 255, 0.05);
-  box-shadow:
-    0 0 50px rgba(108, 99, 255, 0.2),
-    inset 0 0 100px rgba(255, 255, 255, 0.02);
+  /* Reduced expensive box shadow passes */
+  box-shadow: 0 0 30px rgba(108, 99, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -909,6 +910,8 @@ button {
   text-align: center;
   padding: 2rem;
   z-index: 2;
+  /* Optimized for floating animation */
+  will-change: transform;
 }
 
 .theater-2d__icon {
@@ -941,8 +944,7 @@ button {
   left: 5%;
   right: 5%;
   height: 20px;
-  background: radial-gradient(ellipse at top, rgba(108, 99, 255, 0.3), transparent 70%);
-  filter: blur(10px);
+  background: radial-gradient(ellipse at top, rgba(108, 99, 255, 0.2), transparent 70%);
   z-index: 0;
 }
 

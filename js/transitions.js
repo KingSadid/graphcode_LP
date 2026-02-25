@@ -1,13 +1,17 @@
 /* ============================================
-   Barba.js — Page Transitions (each unique)
+   Barba.js — Page Transitions (Smoother, Anti-Lag)
    ============================================ */
 
 export function initTransitions(onLeave, onEnter) {
 
+    // Add more delay between leaving and entering to allow 
+    // the page and heavy Three.js scripts to reinitialize without stuttering visually.
+    const COVER_DURATION = 0.8;
+    const DELAY_BEFORE_ENTER = 0.5;
+
     barba.init({
         preventRunning: true,
         transitions: [
-
             /* --- Inicio → Productos: Horizontal Wipe --- */
             {
                 name: 'wipe-horizontal',
@@ -21,8 +25,9 @@ export function initTransitions(onLeave, onEnter) {
                         .set(overlay, { display: 'block', opacity: 1 })
                         .fromTo(inner,
                             { xPercent: -100 },
-                            { xPercent: 0, duration: 0.6, ease: 'power3.inOut' }
+                            { xPercent: 0, duration: COVER_DURATION, ease: 'power4.inOut' }
                         )
+                        .to({}, { duration: 0.2 }) // Extra wait to allow heavy teardown
                         .add(() => onLeave && onLeave());
                 },
                 enter(data) {
@@ -30,8 +35,9 @@ export function initTransitions(onLeave, onEnter) {
                     const inner = overlay.querySelector('.transition-overlay__inner');
                     onEnter && onEnter(data.next.namespace);
                     return gsap.timeline()
+                        .to({}, { duration: DELAY_BEFORE_ENTER }) // Extra wait before uncovering to let scene init 
                         .to(inner,
-                            { xPercent: 100, duration: 0.6, ease: 'power3.inOut', delay: 0.15 }
+                            { xPercent: 100, duration: COVER_DURATION, ease: 'power4.inOut' }
                         )
                         .set(overlay, { display: 'none' });
                 }
@@ -50,8 +56,9 @@ export function initTransitions(onLeave, onEnter) {
                         .set(overlay, { display: 'block' })
                         .fromTo(inner,
                             { scale: 0, opacity: 1, borderRadius: '50%' },
-                            { scale: 3, opacity: 1, duration: 0.7, ease: 'power2.in' }
+                            { scale: 4, opacity: 1, duration: COVER_DURATION, ease: 'power3.inOut' }
                         )
+                        .to({}, { duration: 0.2 })
                         .add(() => onLeave && onLeave());
                 },
                 enter(data) {
@@ -59,8 +66,9 @@ export function initTransitions(onLeave, onEnter) {
                     const inner = overlay.querySelector('.transition-overlay__inner');
                     onEnter && onEnter(data.next.namespace);
                     return gsap.timeline()
+                        .to({}, { duration: DELAY_BEFORE_ENTER })
                         .to(inner,
-                            { opacity: 0, duration: 0.5, ease: 'power2.out', delay: 0.1 }
+                            { opacity: 0, duration: 0.6, ease: 'power2.out' }
                         )
                         .set(overlay, { display: 'none' })
                         .set(inner, { scale: 1, borderRadius: '0%', opacity: 1 });
@@ -75,13 +83,14 @@ export function initTransitions(onLeave, onEnter) {
                 leave(data) {
                     const overlay = document.querySelector('.transition-overlay');
                     const inner = overlay.querySelector('.transition-overlay__inner');
-                    inner.style.background = 'linear-gradient(180deg, var(--blue), var(--pink), var(--blue))';
+                    inner.style.background = 'linear-gradient(180deg, var(--blue), var(--pink), var(--black))';
                     return gsap.timeline()
                         .set(overlay, { display: 'block', opacity: 1 })
                         .fromTo(inner,
                             { yPercent: -100 },
-                            { yPercent: 0, duration: 0.6, ease: 'power3.inOut' }
+                            { yPercent: 0, duration: COVER_DURATION, ease: 'power4.inOut' }
                         )
+                        .to({}, { duration: 0.2 })
                         .add(() => onLeave && onLeave());
                 },
                 enter(data) {
@@ -89,8 +98,9 @@ export function initTransitions(onLeave, onEnter) {
                     const inner = overlay.querySelector('.transition-overlay__inner');
                     onEnter && onEnter(data.next.namespace);
                     return gsap.timeline()
+                        .to({}, { duration: DELAY_BEFORE_ENTER })
                         .to(inner,
-                            { yPercent: 100, duration: 0.6, ease: 'power3.inOut', delay: 0.15 }
+                            { yPercent: 100, duration: COVER_DURATION, ease: 'power4.inOut' }
                         )
                         .set(overlay, { display: 'none' });
                 }
@@ -109,8 +119,9 @@ export function initTransitions(onLeave, onEnter) {
                         .set(overlay, { display: 'block', opacity: 1 })
                         .fromTo(inner,
                             { xPercent: -100, yPercent: -100 },
-                            { xPercent: 0, yPercent: 0, duration: 0.7, ease: 'power3.inOut' }
+                            { xPercent: 0, yPercent: 0, duration: COVER_DURATION, ease: 'power4.inOut' }
                         )
+                        .to({}, { duration: 0.2 })
                         .add(() => onLeave && onLeave());
                 },
                 enter(data) {
@@ -118,8 +129,9 @@ export function initTransitions(onLeave, onEnter) {
                     const inner = overlay.querySelector('.transition-overlay__inner');
                     onEnter && onEnter(data.next.namespace);
                     return gsap.timeline()
+                        .to({}, { duration: DELAY_BEFORE_ENTER })
                         .to(inner,
-                            { xPercent: 100, yPercent: 100, duration: 0.7, ease: 'power3.inOut', delay: 0.15 }
+                            { xPercent: 100, yPercent: 100, duration: COVER_DURATION, ease: 'power4.inOut' }
                         )
                         .set(overlay, { display: 'none' });
                 }
@@ -136,8 +148,9 @@ export function initTransitions(onLeave, onEnter) {
                         .set(overlay, { display: 'block' })
                         .fromTo(inner,
                             { opacity: 0 },
-                            { opacity: 1, duration: 0.4, ease: 'power2.inOut' }
+                            { opacity: 1, duration: 0.5, ease: 'power2.inOut' }
                         )
+                        .to({}, { duration: 0.2 })
                         .add(() => onLeave && onLeave());
                 },
                 enter(data) {
@@ -145,8 +158,9 @@ export function initTransitions(onLeave, onEnter) {
                     const inner = overlay.querySelector('.transition-overlay__inner');
                     onEnter && onEnter(data.next.namespace);
                     return gsap.timeline()
+                        .to({}, { duration: DELAY_BEFORE_ENTER })
                         .to(inner,
-                            { opacity: 0, duration: 0.4, ease: 'power2.inOut', delay: 0.15 }
+                            { opacity: 0, duration: 0.5, ease: 'power2.inOut' }
                         )
                         .set(overlay, { display: 'none' });
                 }

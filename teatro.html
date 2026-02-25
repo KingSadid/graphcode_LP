@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sala de Cine — GraphCode</title>
-    <meta name="description" content="Sala de cine virtual 3D de GraphCode. Próximamente disponible." />
+    <meta name="description" content="Sala de cine virtual de GraphCode. Próximamente disponible." />
 
     <link rel="stylesheet" href="css/main.css" />
 
@@ -14,8 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popmotion@11.0.5/dist/popmotion.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+    <!-- Popmotion removed locally, keeping GSAP as main engine -->
 </head>
 
 <body>
@@ -46,7 +45,25 @@
         <div data-barba="container" data-barba-namespace="teatro">
 
             <section id="teatro" class="section theater-section">
-                <div id="theater-canvas-container" class="theater-canvas-container"></div>
+
+                <!-- 2D Theater Scene -->
+                <div class="theater-2d">
+                    <div class="theater-2d__projector-light"></div>
+
+                    <div class="theater-2d__screen-wrapper">
+                        <div class="theater-2d__screen">
+                            <div class="theater-2d__content">
+                                <span class="theater-2d__icon">🎬</span>
+                                <h2 class="theater-2d__title">Próxima Función</h2>
+                                <p class="theater-2d__subtitle">El video estará disponible muy pronto cuando sea cargado
+                                    por nuestros ingenieros.</p>
+                            </div>
+                        </div>
+                        <!-- glowing reflection under screen -->
+                        <div class="theater-2d__reflection"></div>
+                    </div>
+                </div>
+
                 <a href="productos.html" class="theater-back magnetic-btn">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">

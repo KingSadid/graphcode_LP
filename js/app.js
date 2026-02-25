@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Barba.js transitions ---
     initTransitions(
         // onLeave: cleanup old scene
-        () => {
+        async () => {
             if (cleanupScene) {
                 cleanupScene();
                 cleanupScene = null;
@@ -68,17 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 cleanupTheater();
                 cleanupTheater = null;
             }
+            // Add a tiny buffer so DOM stays clean
+            return new Promise(resolve => setTimeout(resolve, 50));
         },
-        // onEnter: init new scene & animations
-        (newNamespace) => {
+        // onEnter: init new scene & animations (async to let it settle)
+        async (newNamespace) => {
             window.scrollTo(0, 0);
 
             if (newNamespace !== 'teatro') {
                 cleanupScene = initThreeScene(newNamespace);
             }
-
-            // Re-init animations for new page content
-            refreshAnimations();
 
             // Page-specific inits
             if (newNamespace === 'contacto') {
@@ -93,6 +92,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Re-setup mobile nav events for new content
             setupMobileNav();
+
+            // Re-init animations for new page content
+            refreshAnimations();
+
+            // Vital: Give the browser a moment to paint the new DOM and heavy Three.js geometries
+            // BEFORE telling Barba the enter phase is done and the overlay should lift
+            return new Promise(resolve => setTimeout(resolve, 150));
         }
     );
 });

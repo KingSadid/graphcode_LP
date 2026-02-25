@@ -33,12 +33,16 @@ export function initTransitions(onLeave, onEnter) {
     }
 
     function makeEnter(revealFn) {
-        return function (data) {
+        return async function (data) {
             const o = overlay(), i = inner();
-            onEnter && onEnter(data.next.namespace);
+
+            // Wait for exactly this hook to finish (app.js async Promise)
+            if (onEnter) {
+                await onEnter(data.next.namespace);
+            }
 
             const tl = gsap.timeline();
-            tl.to({}, { duration: SETTLE }); // wait for scene to init behind overlay
+            tl.to({}, { duration: SETTLE }); // small buffer
             revealFn(tl, i);
             tl.set(o, { display: 'none' });
             tl.set(i, { clearProps: 'all' });

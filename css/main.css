@@ -662,6 +662,10 @@ body.has-custom-cursor .cursor-follower {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  /* Override glass-card to be more transparent */
+  background: rgba(13, 13, 13, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
 }
 
 .contact-form__row {
@@ -693,8 +697,8 @@ body.has-custom-cursor .cursor-follower {
 
 .contact-form__group input,
 .contact-form__group textarea {
-  background: rgba(10, 22, 40, 0.6);
-  border: 1px solid var(--glass-border);
+  background: rgba(10, 22, 40, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 14px 18px;
   font-family: var(--font);

@@ -1,48 +1,42 @@
 /* ============================================
-   App — Main entry point (Multi-page w/ Barba)
+   App — Main entry point (No Barba, standalone pages)
    ============================================ */
 
 import { initThreeScene } from './three-scene.js';
-import { initAnimations, refreshAnimations } from './animations.js';
-import { initTransitions } from './transitions.js';
+import { initAnimations } from './animations.js';
 import { initContactForm } from './contact-form.js';
 import { initTheater } from './theater.js';
-import { scrollToAnchor } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Detect current page namespace ---
-    const container = document.querySelector('[data-barba-namespace]');
-    const namespace = container ? container.dataset.barbaNamespace : 'inicio';
+    // --- Detect current page ---
+    const path = window.location.pathname.split('/').pop() || 'index.html';
+    const namespace = getNamespace(path);
 
     // --- Smooth scroll (Lenis) ---
-    let lenis = null;
     if (namespace !== 'teatro') {
-        lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+        const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => lenis.raf(time * 1000));
         gsap.ticker.lagSmoothing(0);
     }
 
     // --- Three.js background (not on theater page) ---
-    let cleanupScene = null;
     if (namespace !== 'teatro') {
-        cleanupScene = initThreeScene(namespace);
+        initThreeScene(namespace);
     }
 
-    // --- GSAP + Popmotion animations ---
+    // --- GSAP animations + custom cursor + mouse effects ---
     initAnimations();
 
     // --- Page-specific init ---
     if (namespace === 'contacto') {
         initContactForm();
     }
-
-    let cleanupTheater = null;
     if (namespace === 'teatro') {
-        cleanupTheater = initTheater();
+        initTheater();
     }
 
-    // Recalculate scroll positions
+    // --- ScrollTrigger refresh ---
     if (typeof ScrollTrigger !== 'undefined') {
         ScrollTrigger.refresh();
     }
@@ -55,53 +49,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Mobile nav toggle ---
     setupMobileNav();
-
-    // --- Barba.js transitions ---
-    initTransitions(
-        // onLeave: cleanup old scene
-        async () => {
-            if (cleanupScene) {
-                cleanupScene();
-                cleanupScene = null;
-            }
-            if (cleanupTheater) {
-                cleanupTheater();
-                cleanupTheater = null;
-            }
-            // Add a tiny buffer so DOM stays clean
-            return new Promise(resolve => setTimeout(resolve, 50));
-        },
-        // onEnter: init new scene & animations (async to let it settle)
-        async (newNamespace) => {
-            window.scrollTo(0, 0);
-
-            if (newNamespace !== 'teatro') {
-                cleanupScene = initThreeScene(newNamespace);
-            }
-
-            // Page-specific inits
-            if (newNamespace === 'contacto') {
-                initContactForm();
-            }
-            if (newNamespace === 'teatro') {
-                cleanupTheater = initTheater();
-            }
-
-            // Update active nav
-            updateNavActive(newNamespace);
-
-            // Re-setup mobile nav events for new content
-            setupMobileNav();
-
-            // Re-init animations for new page content
-            refreshAnimations();
-
-            // Vital: Give the browser a moment to paint the new DOM and heavy Three.js geometries
-            // BEFORE telling Barba the enter phase is done and the overlay should lift
-            return new Promise(resolve => setTimeout(resolve, 150));
-        }
-    );
 });
+
+/* --------------------------------------------------
+   Page namespace detection
+   -------------------------------------------------- */
+function getNamespace(path) {
+    if (path.includes('productos')) return 'productos';
+    if (path.includes('fundadores')) return 'fundadores';
+    if (path.includes('redes')) return 'redes';
+    if (path.includes('contacto')) return 'contacto';
+    if (path.includes('teatro')) return 'teatro';
+    return 'inicio';
+}
 
 /* --------------------------------------------------
    Mobile Nav Setup
@@ -125,25 +85,5 @@ function setupMobileNav() {
             newToggle.classList.remove('open');
             navLinks.classList.remove('open');
         });
-    });
-}
-
-/* --------------------------------------------------
-   Update active nav link
-   -------------------------------------------------- */
-function updateNavActive(namespace) {
-    const pageMap = {
-        'inicio': 'index.html',
-        'productos': 'productos.html',
-        'fundadores': 'fundadores.html',
-        'redes': 'redes.html',
-        'contacto': 'contacto.html',
-        'teatro': 'productos.html', // theater is under products
-    };
-
-    const activeHref = pageMap[namespace] || 'index.html';
-
-    document.querySelectorAll('.navbar__links a').forEach((link) => {
-        link.classList.toggle('active', link.getAttribute('href') === activeHref);
     });
 }

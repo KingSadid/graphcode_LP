@@ -35,6 +35,7 @@
 
 html {
   scroll-behavior: auto;
+  overflow-x: hidden;
 }
 
 body {
@@ -1145,5 +1146,42 @@ body.has-custom-cursor .cursor-follower {
 
   .hero__ring--3 {
     display: none;
+  }
+
+  .hero__cta {
+    font-size: 14px;
+    padding: 14px 28px;
+  }
+
+  /* Social grid on mobile */
+  .social__grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .social-link {
+    padding: 14px 20px;
+  }
+
+  /* Theater on mobile */
+  .theater-2d {
+    padding: 0 3%;
+  }
+
+  .theater-2d__screen-wrapper {
+    aspect-ratio: 16 / 9;
+    transform: none;
+  }
+
+  .theater-back {
+    bottom: 24px;
+    font-size: 13px;
+    padding: 10px 22px;
+  }
+
+  /* Hide custom cursor on mobile */
+  .cursor,
+  .cursor-follower {
+    display: none !important;
   }
 }

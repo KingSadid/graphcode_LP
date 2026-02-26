@@ -6,10 +6,15 @@ export function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
     animatePageContent();
-    setupMagneticButtons();
-    setupCardTilts();
-    setupCustomCursor();
-    setupMouseParallax();
+
+    // Only run cursor-reactive effects on desktop (pointer: fine)
+    const isDesktop = window.matchMedia('(pointer: fine)').matches;
+    if (isDesktop) {
+        setupMagneticButtons();
+        setupCardTilts();
+        setupCustomCursor();
+        setupMouseParallax();
+    }
 }
 
 /* --------------------------------------------------
@@ -172,7 +177,9 @@ function setupCustomCursor() {
    Mouse Parallax — page content reacts to cursor
    -------------------------------------------------- */
 function setupMouseParallax() {
-    // Move section titles, cards, and decorative elements in response to cursor position
+    // Skip entirely on touch/mobile devices
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
     const parallaxTargets = document.querySelectorAll(
         '.section__title, .section__subtitle, .hero__floating-code, .hero__ring, .glass-card'
     );

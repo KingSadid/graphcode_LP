@@ -11,13 +11,11 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/main.css" />
 
-  <!-- CDN Libraries -->
+  <!-- CDN Libraries (Three.js + GSAP + Lenis only) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popmotion@11.0.5/dist/popmotion.min.js"></script>
 </head>
 
 <body>
@@ -30,12 +28,11 @@
   <!-- Three.js Canvas -->
   <canvas id="three-canvas"></canvas>
 
-  <!-- Page Transition Overlay -->
-  <div class="transition-overlay">
-    <div class="transition-overlay__inner"></div>
-  </div>
+  <!-- Custom Cursor -->
+  <div class="cursor" id="custom-cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
 
-  <!-- Navbar (persistent across pages) -->
+  <!-- Navbar -->
   <nav class="navbar">
     <a href="index.html" class="navbar__logo">Graph<span>Code</span></a>
     <div class="navbar__links">
@@ -50,51 +47,44 @@
     </button>
   </nav>
 
-  <!-- Barba.js Wrapper -->
-  <div data-barba="wrapper">
-    <div data-barba="container" data-barba-namespace="inicio">
-
-      <!-- ============ HERO ============ -->
-      <section id="inicio" class="section hero">
-        <div class="hero__particles-extra"></div>
-        <p class="section__tag anim-text" data-anim="fade-up">Bienvenido a</p>
-        <h1 class="section__title anim-text" data-anim="glitch-in">Graph<span>Code</span></h1>
-        <p class="section__subtitle anim-text" data-anim="fade-up">
-          Transformamos ideas en experiencias digitales. Desarrollo web &amp; móvil fullstack,
-          diseño gráfico y producción audiovisual de alto impacto.
-        </p>
-        <a href="productos.html" class="hero__cta magnetic-btn anim-text" data-anim="scale-in">
-          Descubre Nuestro Trabajo
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
-        <div class="hero__scroll-hint">
-          <span class="line"></span>
-          SCROLL
-        </div>
-
-        <!-- Floating code snippets decoration -->
-        <div class="hero__floating-code hero__floating-code--1">&lt;div class="future"/&gt;</div>
-        <div class="hero__floating-code hero__floating-code--2">{ transform: "dreams" }</div>
-        <div class="hero__floating-code hero__floating-code--3">const innovation = true;</div>
-
-        <!-- Animated rings -->
-        <div class="hero__ring hero__ring--1"></div>
-        <div class="hero__ring hero__ring--2"></div>
-        <div class="hero__ring hero__ring--3"></div>
-      </section>
-
-      <!-- ============ FOOTER ============ -->
-      <footer class="footer">
-        <p class="footer__brand">Graph<span>Code</span></p>
-        <p class="footer__copy">&copy; 2026 GraphCode. Todos los derechos reservados.</p>
-        <p class="footer__tagline">Desarrollo · Diseño · Producción Audiovisual</p>
-      </footer>
-
+  <!-- ============ HERO ============ -->
+  <section id="inicio" class="section hero">
+    <div class="hero__particles-extra"></div>
+    <p class="section__tag anim-text" data-anim="fade-up">Bienvenido a</p>
+    <h1 class="section__title anim-text" data-anim="glitch-in">Graph<span>Code</span></h1>
+    <p class="section__subtitle anim-text" data-anim="fade-up">
+      Transformamos ideas en experiencias digitales. Desarrollo web &amp; móvil fullstack,
+      diseño gráfico y producción audiovisual de alto impacto.
+    </p>
+    <a href="productos.html" class="hero__cta magnetic-btn anim-text" data-anim="scale-in">
+      Descubre Nuestro Trabajo
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    </a>
+    <div class="hero__scroll-hint">
+      <span class="line"></span>
+      SCROLL
     </div>
-  </div>
+
+    <!-- Floating code snippets decoration -->
+    <div class="hero__floating-code hero__floating-code--1">&lt;div class="future"/&gt;</div>
+    <div class="hero__floating-code hero__floating-code--2">{ transform: "dreams" }</div>
+    <div class="hero__floating-code hero__floating-code--3">const innovation = true;</div>
+
+    <!-- Animated rings -->
+    <div class="hero__ring hero__ring--1"></div>
+    <div class="hero__ring hero__ring--2"></div>
+    <div class="hero__ring hero__ring--3"></div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <p class="footer__brand">Graph<span>Code</span></p>
+    <p class="footer__copy">&copy; 2026 GraphCode. Todos los derechos reservados.</p>
+    <p class="footer__tagline">Desarrollo · Diseño · Producción Audiovisual</p>
+  </footer>
 
   <!-- App entry -->
   <script type="module" src="js/app.js"></script>

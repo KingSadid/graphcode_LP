@@ -117,20 +117,67 @@ button {
   pointer-events: none;
 }
 
-/* --- Page Transition Overlay --- */
-.transition-overlay {
+/* --- Custom Cursor --- */
+.cursor {
   position: fixed;
-  inset: 0;
-  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--pink);
+  border-radius: 50%;
   pointer-events: none;
-  display: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  mix-blend-mode: difference;
+  transition: width 0.25s, height 0.25s, background 0.25s;
 }
 
-.transition-overlay__inner {
-  width: 100%;
-  height: 100%;
-  background: var(--black);
-  will-change: transform, opacity;
+.cursor--hover {
+  width: 14px;
+  height: 14px;
+  background: var(--white);
+}
+
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--pink);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.cursor-follower--hover {
+  width: 50px;
+  height: 50px;
+  border-color: var(--white);
+}
+
+/* Show custom cursor only on desktop */
+body.has-custom-cursor {
+  cursor: none;
+}
+
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor input,
+body.has-custom-cursor textarea,
+body.has-custom-cursor .magnetic-btn,
+body.has-custom-cursor .glass-card {
+  cursor: none;
+}
+
+body.has-custom-cursor .cursor,
+body.has-custom-cursor .cursor-follower {
+  opacity: 1;
 }
 
 /* --- Navbar --- */
